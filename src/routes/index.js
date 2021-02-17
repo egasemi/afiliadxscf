@@ -45,7 +45,6 @@ router.get('/c/:_dni/:_suma', async (req,res) => {
         display: 'visible',
         color: ''
     }
-    console.log(_suma, resultado)
 
     if (resultado === parseInt(_suma)) {
         const consulta = await Afiliadx.find({dni: _dni});
