@@ -11,7 +11,8 @@ const afiliadxSchema = new Schema({
     clase: String,
     nacimiento: Date,
     profesion: String,
-    contacto: String
+    contacto: String,
+    confirmada: Boolean
 },{
     versionKey:false,
     timestamps: true

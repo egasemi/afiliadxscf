@@ -12,10 +12,12 @@ const Afiliadx = require('../models/Afiliadx');
 });*/
 
 // index
+function numRandom(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 router.get('/', (req,res) => {
-    function numRandom(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+
     sum1 = numRandom(1,11)
     sum2 = numRandom(1,11)
     resultado = sum1 + sum2
@@ -34,9 +36,6 @@ router.get('/', (req,res) => {
 
 // ver afiliadx
 router.get('/c/:_dni/:_suma', async (req,res) => {
-    function numRandom(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
 
     const { _dni } = req.params;
     const { _suma } = req.params;
@@ -49,8 +48,16 @@ router.get('/c/:_dni/:_suma', async (req,res) => {
     if (resultado === parseInt(_suma)) {
         const consulta = await Afiliadx.find({dni: _dni});
         if (consulta.length > 0) {
-            afiliadx.texto = 'Afiliadx!';            
-            afiliadx.color = 'success'
+            var nombres = consulta[0].nombre.split(' ');
+            var apellido = consulta[0].apellido;
+            console.log(consulta[0].confirmada)
+            if (consulta[0].confirmada === true) {
+                afiliadx.texto = `${nombres[0]} ${apellido} está afiliadx!`;            
+                afiliadx.color = 'success'
+            } else {
+                afiliadx.texto = `La afiliación de ${nombres[0]} ${apellido} fue enviada pero rebotó o se cayó :/`;
+                afiliadx.color = 'warning'
+            }
         } else {
             afiliadx.texto = 'Sin afiliar';
             afiliadx.color = 'warning'
