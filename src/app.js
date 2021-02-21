@@ -16,6 +16,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/personascf',{
 // importar rutas
 
 const indexRoutes = require('./routes/index');
+const dniRoutes = require('./routes/dni');
+const nommbreRoutes = require('./routes/nombre')
 
 // configuración
 
@@ -30,7 +32,7 @@ app.use(express.urlencoded({extended: false}));
 
 // rutas
 
-app.use(indexRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes);
 
 // arranca el server
 
