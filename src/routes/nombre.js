@@ -37,11 +37,11 @@ router.get('/nombre/:_nombre/:_apellido/:_suma', async (req, res) => {
     if (resultado === parseInt(_suma)) {
         var consulta = await Afiliadx.find({
             nombre: {
-                $regex: `^${_nombre}`,
+                $regex: `${_nombre}`,
                 $options: 'i'
             },
             apellido:{
-                $regex: `^${_apellido}`,
+                $regex: `${_apellido}`,
                 $options: 'i'
             }
         })
