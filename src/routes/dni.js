@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { MD5 } = require('crypto-js')
-
 const Afiliadx = require('../models/Afiliadx');
+const isAuthenticated = require('../passport/local-auth');
 
 function numRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-router.get('/dni', (req,res) => {
+router.get('/dni', isAuthenticated,(req,res) => {
 
     sum1 = numRandom(1,11)
     sum2 = numRandom(1,11)
@@ -26,7 +25,13 @@ router.get('/dni', (req,res) => {
     });
 });
 
-router.get('/dni/:_dni/:_suma', async (req,res) => {
+router.post('/dni', isAuthenticated, (req,res)=> {
+    const {dni, suma} = req.body;
+
+    res.redirect(`/dni/${dni}/${suma}`);
+})
+
+router.get('/dni/:_dni/:_suma', isAuthenticated, async (req,res) => {
 
     const { _dni, _suma } = req.params;
     afiliadx = {

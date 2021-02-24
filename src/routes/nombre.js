@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const Afiliadx = require('../models/Afiliadx');
+const isAuthenticated = require('../passport/local-auth');
 
 function numRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-router.get('/nombre', (req,res) => {
+router.get('/nombre', isAuthenticated,(req,res) => {
 
     sum1 = numRandom(1,11)
     sum2 = numRandom(1,11)
@@ -27,7 +28,13 @@ router.get('/nombre', (req,res) => {
     });
 });
 
-router.get('/nombre/:_nombre/:_apellido/:_suma', async (req, res) => {
+router.post('/nombre', isAuthenticated, (req, res) => {
+    const { nombre, apellido, suma} = req.body;
+    res.redirect(`nombre/${nombre}/${apellido}/${suma}`)
+
+})
+
+router.get('/nombre/:_nombre/:_apellido/:_suma',isAuthenticated , async (req, res) => {
     const { _nombre, _apellido, _suma } = req.params;
     afiliadx = {
         texto: '',
@@ -38,11 +45,11 @@ router.get('/nombre/:_nombre/:_apellido/:_suma', async (req, res) => {
         var consulta = await Afiliadx.find({
             nombre: {
                 $regex: `${_nombre}`,
-                $options: 'i'
+                $options: 'si'
             },
             apellido:{
                 $regex: `${_apellido}`,
-                $options: 'i'
+                $options: 'si'
             }
         })
         if (consulta.length < 1) {
@@ -68,7 +75,7 @@ router.get('/nombre/:_nombre/:_apellido/:_suma', async (req, res) => {
     sum2 = numRandom(1,11)
     resultado = sum1 + sum2
 
-    res.render('nombre',{
+    res.render('/nombre',{
         consulta,
         resultado,
         afiliadx

@@ -1,0 +1,29 @@
+<%- include('partials/_header') %>
+
+<form action="/singin" method="POST">
+    <div class="d-grid gap-4">
+
+        <div class="d-flex justify-content-between">
+            <h3>Registro Consulta Afiliadxs</h3>
+        </div>
+
+        <div class="form-floating">
+            <input type="number" name="dni" id="dni" class="form-control" autocomplete="off" placeholder="DNI" required>
+            <label for="dni">DNI</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" name="password" id ="password" class="form-control <%= passError %>" autocomplete="off" placeholder="Contraseña" required>
+            <label for="password" class="col-form-label">Contraseña</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="rpassword" id ="rpassword" class="form-control" autocomplete="off" placeholder="Repetir contraseña" required>
+            <label for="password" class="col-form-label">Repetir contraseña</label>
+        </div>
+
+        <button class="btn btn-outline-success btn-lg" aria-describedby="dni" id="buscar">Ingresar</button>
+
+    </div>
+</form>
+
+<%- include('partials/_footer') %>

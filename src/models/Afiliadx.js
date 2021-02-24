@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt-nodejs')
 
 const afiliadxSchema = new Schema({
     dni: Number,
@@ -12,10 +13,19 @@ const afiliadxSchema = new Schema({
     nacimiento: Date,
     profesion: String,
     contacto: String,
-    confirmada: Boolean
+    confirmada: Boolean,
+    password: String
 },{
     versionKey:false,
     timestamps: true
 })
+
+afiliadxSchema.methods.encryptPassword = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
+afiliadxSchema.methods.comparePassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+}
 
 module.exports = mongoose.model('afiliadxs', afiliadxSchema)

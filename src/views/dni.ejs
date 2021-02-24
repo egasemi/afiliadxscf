@@ -1,31 +1,28 @@
 <%- include('partials/_header') %>
-<div class="container d-flex justify-content-center mt-4">
-    <div class="col-md-6">
-        <div class="d-grid gap-4">
 
-            <div class="d-flex justify-content-between">
-                <h3>Consulta Afiliadxs por DNI</h3>
-                <a class="btn btn-outline-primary btn-sm" href="/nombre">Buscar por Nombre</a>
-            </div>
-    
-            <div class="form-floating">
-                <input type="number" name="dni" id="dni" class="form-control" autocomplete="off" placeholder="DNI" required>
-                <label for="dni">DNI</label>
-            </div>
-    
-            <div class="form-floating">
-                <input type="number" name="suma" id ="suma" class="form-control" autocomplete="off" placeholder="cuenta" required>
-                <label for="suma" class="col-form-label">Escribí el resultado de <%= sum1 %> + <%= sum2 %></label>
-            </div>
-    
-            <button class="btn btn-outline-success btn-lg" aria-describedby="dni" id="buscar">Buscar</button>
+<form action="/dni" method="POST" class="d-grid gap-4">
 
-            <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>"><%= afiliadx.texto %></div>
-        </div>
+    <div class="d-flex justify-content-between">
+        <h3>Consulta Afiliadxs por DNI</h3>
+        <a class="btn btn-outline-primary btn-sm" href="/nombre">Buscar por Nombre</a>
     </div>
-</div>
 
-<script>
+    <div class="form-floating">
+        <input type="number" name="dni" id="dni" class="form-control" autocomplete="off" placeholder="DNI" required>
+        <label for="dni">DNI</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="number" name="suma" id ="suma" class="form-control" autocomplete="off" placeholder="cuenta" required>
+        <label for="suma" class="col-form-label">Escribí el resultado de <%= sum1 %> + <%= sum2 %></label>
+    </div>
+
+    <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="dni" id="buscar">Buscar</button>
+
+    <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>"><%= afiliadx.texto %></div>
+</form>
+
+<!--script>
     $('#buscar').click( () => {
         var dni = $('#dni').val();
         var suma = $('#suma').val();
@@ -37,5 +34,5 @@
             $('input').toggleClass('is-invalid',true)
         }
     })
-</script>
+</script-->
 <%- include('partials/_footer') %>

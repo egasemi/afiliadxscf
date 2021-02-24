@@ -3,6 +3,10 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const app = express();
+const passport = require('passport');
+const session = require('express-session');
+const flash = require('connect-flash');
+require('./passport/local-auth');
 
 // conectando a la db
 
@@ -17,7 +21,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/personascf',{
 
 const indexRoutes = require('./routes/index');
 const dniRoutes = require('./routes/dni');
-const nommbreRoutes = require('./routes/nombre')
+const nommbreRoutes = require('./routes/nombre');
+const loginRoutes = require('./routes/login');
+const singinRoutes = require('./routes/singin')
 
 // configuración
 
@@ -29,10 +35,23 @@ app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
+app.use(session({
+    secret: process.env.SECRET || 'securesecret',
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(flash())
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+    app.locals.loginMessage = req.flash('loginMessage');
+    next();
+})
 
 // rutas
 
-app.use(indexRoutes,dniRoutes,nommbreRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes);
 
 // arranca el server
 

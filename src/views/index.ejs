@@ -1,14 +1,11 @@
 <%- include('partials/_header') %>
-<div class="container d-flex justify-content-center mt-4">
-    <div class="col-md-6 d-grid gap-4">
-        <h1>Consulta Afiliadxs</h1>
-        <form class="row" action="/dni">
-            <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por DNI</button>
-        </form>
-        <form class="row" action="/nombre">
-            <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por Nombre y Apellido</button>
-        </form>
-    </div>
-</div>
+
+    <h1>Consulta Afiliadxs</h1>
+    <form class="row" action="/dni" method="GET">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por DNI</button>
+    </form>
+    <form class="row" action="/nombre">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por Nombre y Apellido</button>
+    </form>
 
 <%- include('partials/_footer') %>
