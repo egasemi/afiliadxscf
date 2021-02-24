@@ -75,7 +75,7 @@ router.get('/nombre/:_nombre/:_apellido/:_suma',isAuthenticated , async (req, re
     sum2 = numRandom(1,11)
     resultado = sum1 + sum2
 
-    res.render('/nombre',{
+    res.render('nombre',{
         consulta,
         resultado,
         afiliadx
