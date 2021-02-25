@@ -30,18 +30,28 @@ router.get('/nombre', isAuthenticated,(req,res) => {
 
 router.post('/nombre', isAuthenticated, (req, res) => {
     const { nombre, apellido, suma} = req.body;
-    res.redirect(`nombre/${nombre}/${apellido}/${suma}`)
+    if (nombre === '') {
+        res.redirect(`nombre/${suma}/${apellido}/*`)
+    }
+    res.redirect(`nombre/${suma}/${apellido}/${nombre}`)
 
 })
 
-router.get('/nombre/:_nombre/:_apellido/:_suma',isAuthenticated , async (req, res) => {
+router.get('/nombre/:_suma/:_apellido/:_nombre',isAuthenticated , async (req, res) => {
     const { _nombre, _apellido, _suma } = req.params;
     afiliadx = {
         texto: '',
         color: '',
         display: 'visible'
     }
-    if (resultado === parseInt(_suma)) {
+    if (resultado ==! _suma) {
+        consulta = {display:'invisible'};
+        afiliadx = {
+            texto :'Sacaste mal la cuenta',
+            color :'danger',
+            display :'visible'
+        }
+    } else {
         var consulta = await Afiliadx.find({
             nombre: {
                 $regex: `${_nombre}`,
@@ -52,25 +62,35 @@ router.get('/nombre/:_nombre/:_apellido/:_suma',isAuthenticated , async (req, re
                 $options: 'si'
             }
         })
-        if (consulta.length < 1) {
-            afiliadx = {
-                texto: 'No hay afiliadxs con ese nombre',
-                color: 'warning',
-                display: 'visible'
-            }
-        } else {
-    
-            afiliadx.display = 'invisible';
+        if (consulta.length > 0) {
+
             consulta.display = 'visible';
-        }
-    } else {
-        consulta = {display:'invisible'};
-        afiliadx = {
-            texto :'Sacaste mal la cuenta',
-            color :'danger',
-            display :'visible'
+            afiliadx.display = 'invisible'
+
+        } else {
+
+            var consulta = await Afiliadx.find({
+                apellido:{
+                    $regex: `${_apellido}`,
+                    $options: 'si'
+                }
+            })
+
+            if (consulta.length > 0) {
+
+                consulta.display = 'visible';
+                afiliadx.display = 'invisible';
+            } else {
+                consulta.display = 'invisible';
+                afiliadx = {
+                    display: 'visible',
+                    texto: 'No hay afiliadxs con ese nombre',
+                    color: 'warning'
+                }
+            }
         }
     }
+
     sum1 = numRandom(1,11)
     sum2 = numRandom(1,11)
     resultado = sum1 + sum2

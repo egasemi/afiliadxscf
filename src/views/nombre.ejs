@@ -1,13 +1,14 @@
 <%- include('partials/_header') %>
+<%- include('navbar') %>
 
 <form action="/nombre" method="post" class="d-grid gap-4">
     <div class="d-flex justify-content-between">
         <h3>Consulta Afiliadxs por Nombre</h3>
-        <a class="btn btn-outline-primary btn-sm" href="/dni">Buscar por DNI</a>
+        <!--a class="btn btn-outline-primary btn-sm" href="/dni">Buscar por DNI</a-->
     </div>
 
     <div class="form-floating">
-        <input type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" placeholder="Nombre" required>
+        <input type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" placeholder="Nombre">
         <label for="nombre">Nombre</label>
     </div>
     <div class="form-floating">
@@ -28,11 +29,11 @@
     <% for( let i = 0; i < consulta.length; i++ ) { %>
         <% if (consulta[i].confirmada === true) { %>
             <li class="list-group-item list-group-item-success">
-                <%= `${consulta[i].nombre} ${consulta[i].apellido} está afiliadx`%> 
+                <%=consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> está afiliadx :)
             </li>
         <% } else { %>
             <li class="list-group-item list-group-item-warning">
-                <%=`La afiliación de ${consulta[i].nombre} ${consulta[i].apellido} fue enviada pero rebotó o se cayó :/`%> 
+                <%='La afiliación de '+ consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> fue enviada pero rebotó o se cayó :/ 
             </li>
                 
         <% } %>

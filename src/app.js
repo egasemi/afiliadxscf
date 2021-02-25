@@ -23,7 +23,8 @@ const indexRoutes = require('./routes/index');
 const dniRoutes = require('./routes/dni');
 const nommbreRoutes = require('./routes/nombre');
 const loginRoutes = require('./routes/login');
-const singinRoutes = require('./routes/singin')
+const singinRoutes = require('./routes/singin');
+const listaRoutes  = require('./routes/lista');
 
 // configuración
 
@@ -51,7 +52,7 @@ app.use((req, res, next) => {
 
 // rutas
 
-app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes);
 
 // arranca el server
 

@@ -32,7 +32,10 @@ passport.use('local-login', new localStrategy({
     const afiliadx = await Afiliadx.findOne({dni:dni})
     if(!afiliadx) {
         return done(null, false, req.flash('loginMessage', 'Usuarix no encontrado'))
-    } 
+    }
+    if(afiliadx.password === undefined) {
+        return done(null, false, req.flash('loginMessage', 'Afiliadx sin acceso'))
+    }
     if(!afiliadx.comparePassword(password)) {
         return done(null, false, req.flash('loginMessage', 'Contraseña invalida'))
     }

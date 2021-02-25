@@ -1,10 +1,11 @@
 <%- include('partials/_header') %>
+<%- include('navbar') %>
 
 <form action="/dni" method="POST" class="d-grid gap-4">
 
     <div class="d-flex justify-content-between">
         <h3>Consulta Afiliadxs por DNI</h3>
-        <a class="btn btn-outline-primary btn-sm" href="/nombre">Buscar por Nombre</a>
+        <!--a class="btn btn-outline-primary btn-sm" href="/nombre">Buscar por Nombre</a-->
     </div>
 
     <div class="form-floating">
@@ -22,17 +23,4 @@
     <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>"><%= afiliadx.texto %></div>
 </form>
 
-<!--script>
-    $('#buscar').click( () => {
-        var dni = $('#dni').val();
-        var suma = $('#suma').val();
-
-        if (suma > 0 && dni > 0) {
-            $('input').toggleClass('is-invalid',false)
-            location.replace(`/dni/${dni}/${suma}`)
-        } else {
-            $('input').toggleClass('is-invalid',true)
-        }
-    })
-</script-->
 <%- include('partials/_footer') %>

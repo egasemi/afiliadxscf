@@ -41,15 +41,14 @@ router.get('/dni/:_dni/:_suma', isAuthenticated, async (req,res) => {
     }
 
     if (resultado === parseInt(_suma)) {
-        const consulta = await Afiliadx.find({dni: _dni});
-        if (consulta.length > 0) {
-            var nombre = consulta[0].nombre.split(' ')[0];
-            var apellido = consulta[0].apellido;
-            if (consulta[0].confirmada === true) {
-                afiliadx.texto = `${nombre} ${apellido} está afiliadx!`;            
+        const consulta = await Afiliadx.findOne({dni: _dni});
+        console.log(consulta)
+        if (consulta) {
+            if (consulta.confirmada === true) {
+                afiliadx.texto = `${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} está afiliadx! :)`;            
                 afiliadx.color = 'success'
             } else {
-                afiliadx.texto = `La afiliación de ${nombre} ${apellido} fue enviada pero rebotó o se cayó :/`;
+                afiliadx.texto = `La afiliación de ${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} fue enviada pero rebotó o se cayó :/`;
                 afiliadx.color = 'warning'
             }
         } else {
