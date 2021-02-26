@@ -44,6 +44,7 @@ router.get('/dni/:_dni/:_suma', isAuthenticated, async (req,res) => {
         const consulta = await Afiliadx.findOne({dni: _dni});
         console.log(consulta)
         if (consulta) {
+            afiliadx._id = consulta._id
             if (consulta.confirmada === true) {
                 afiliadx.texto = `${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} está afiliadx! :)`;            
                 afiliadx.color = 'success'

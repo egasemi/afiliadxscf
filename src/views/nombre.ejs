@@ -30,10 +30,12 @@
         <% if (consulta[i].confirmada === true) { %>
             <li class="list-group-item list-group-item-success">
                 <%=consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> está afiliadx :)
+                <a href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
             </li>
         <% } else { %>
             <li class="list-group-item list-group-item-warning">
                 <%='La afiliación de '+ consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> fue enviada pero rebotó o se cayó :/ 
+                <a href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
             </li>
                 
         <% } %>

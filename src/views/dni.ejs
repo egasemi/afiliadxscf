@@ -20,7 +20,10 @@
 
     <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="dni" id="buscar">Buscar</button>
 
-    <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>"><%= afiliadx.texto %></div>
+    <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>">
+        <%= afiliadx.texto %>
+        <a href="/afiliadx/<%= afiliadx._id %> ">Ver Ficha</a>
+    </div>
 </form>
 
 <%- include('partials/_footer') %>

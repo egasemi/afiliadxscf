@@ -10,7 +10,7 @@ async function desplegable() {
 
 
 
-router.get('/lista', async (req, res) => {
+router.get('/lista', isAuthenticated, async (req, res) => {
     await desplegable();
     var lista = false
     var count = 0
@@ -23,7 +23,7 @@ router.get('/lista', async (req, res) => {
     })
 })
 
-router.get('/lista/:_distrito', async (req, res) => {
+router.get('/lista/:_distrito', isAuthenticated, async (req, res) => {
     await desplegable()
     var { _distrito } = req.params;
     var lista = await Afiliadx.find({distrito: _distrito})
@@ -33,7 +33,6 @@ router.get('/lista/:_distrito', async (req, res) => {
         count,
         _distrito
     })
-    //var array = await Afiliadx.find({distrito: _distrito})
 })
 
 module.exports = router

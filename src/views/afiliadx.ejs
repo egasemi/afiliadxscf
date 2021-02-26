@@ -1,0 +1,55 @@
+<%- include('partials/_header') %>
+<%- include('navbar') %> 
+<h3 class="mt-4">Ficha de Afiliación</h3>
+<div class="card border-<%= afiliadx.confirmada ? 'success' : 'danger' %> mb-3" id="<%= afiliadx._id %>">
+    <div class="card-header text-white bg-<%= afiliadx.confirmada ? 'success' : 'danger' %>">
+        <h2 class="text-center"><b>DNI: <%= afiliadx.dni %></b></h2>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            <%= afiliadx.apellido + ' ' + afiliadx.nombre %>
+        </h5>
+        <p class="card-text">
+            Domicilio: <b><%= afiliadx.domicilio %></b><br>
+            Celu: <b><%= afiliadx.contacto.length > 4 ? 'Contacto: ' + afiliadx.contacto : '' %></b><br>
+            Edad: <b><%= afiliadx.edad %></b><br>
+            Profesion: <b><%= afiliadx.profesion %></b><br>
+            Fecha de nacimiento: <b><%= afiliadx.nacimiento.toJSON().split('T',1)[0] %></b><br>
+
+        </p>
+        
+        <% if (afiliadx.confirmada) { %>
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="contactadx">Contactadx</label>
+                <input class="form-check-input" type="checkbox" id="contactadx" <%= afiliadx.estado.contactadx ? 'checked' : '' %>>
+            </div>
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="votante">Confirmadx para votar</label>
+                <input class="form-check-input" type="checkbox" id="votante" <%= afiliadx.estado.votante ? 'checked' : '' %>>
+            </div>
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="voto">Votó</label>
+                <input class="form-check-input" type="checkbox" id="voto" <%= afiliadx.estado.voto ? 'checked' : '' %>>
+            </div>
+        <% } else { %>
+            <p class="card-text text-danger">Afiliación pendiente o caída</p>
+        <% } %>
+        <div class="d-grid gap-2 mt-4">
+            <a class="btn btn-outline-primary" href="/afiliadx/editar/<%= afiliadx.id %>">Editar datos</a>
+            <a class="btn btn-outline-danger" href="/afiliadx/borrar/<%= afiliadx.id %>">Eliminar Afiliadx</a>
+            <a class="btn btn-outline-secondary" href="javascript:history.back()"> Volver Atrás</a>
+        </div>
+        
+    </div>
+  </div>
+  <script>
+      $('.form-check-input').on('click',function () {
+          var tipo = $(this).attr('id')
+          var id = $('.card').attr('id')
+          console.log(tipo, id)
+          location.replace(`/afiliadx/estado/${tipo}/${id}`)
+      })
+  </script>
+
+
+<%- include('partials/_footer') %>

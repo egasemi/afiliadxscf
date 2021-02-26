@@ -12,7 +12,8 @@ require('./passport/local-auth');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/personascf',{
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify:true
 })
     .then(db => console.log('db conectada'))
     .catch(err => console.log(err));
@@ -25,6 +26,7 @@ const nommbreRoutes = require('./routes/nombre');
 const loginRoutes = require('./routes/login');
 const singinRoutes = require('./routes/singin');
 const listaRoutes  = require('./routes/lista');
+const afiliadxRoutes = require('./routes/afiliadx');
 
 // configuración
 
@@ -52,7 +54,7 @@ app.use((req, res, next) => {
 
 // rutas
 
-app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes, afiliadxRoutes);
 
 // arranca el server
 

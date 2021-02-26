@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport')
+const isAuthenticated = require('../passport/local-auth')
+const Afiliadx = require('../models/Afiliadx')
 
-router.get('/', isAuthenticated, (req,res) => {
+router.get('/', async (req,res) => {    
     res.render('index')
 })
 
-function isAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/login')
-}
 
 module.exports = router;

@@ -16,7 +16,12 @@ const afiliadxSchema = new Schema({
     confirmada: Boolean,
     password: String,
     domicilio: String,
-    estado: String
+    estado:{
+        votante: Boolean,
+        contactadx: Boolean,
+        voto: Boolean
+    },
+    visible: Boolean
 },{
     versionKey:false,
     timestamps: true
