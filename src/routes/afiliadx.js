@@ -3,6 +3,11 @@ const router = express.Router();
 const Afiliadx = require('../models/Afiliadx');
 const isAuthenticated = require('../passport/local-auth');
 
+async function desplegable() {
+    var array = await Afiliadx.distinct('distrito')
+    return lugares = array.sort();   
+}
+
 router.get('/afiliadx/:id', isAuthenticated, async (req, res) => {
     var afiliadx = await Afiliadx.findById(req.params.id);
     var fecha = new Date()
@@ -24,17 +29,16 @@ router.get('/afiliadx/estado/:tipo/:id', isAuthenticated, async (req, res) => {
 
 router.get('/afiliadx/borrar/:id', isAuthenticated, async (req, res) => {
     var afiliadx = await Afiliadx.findById(req.params.id)
-    console.log(afiliadx.visible)
     afiliadx.visible = !afiliadx.visible
     //afiliadx.save();
-    console.log(afiliadx.visible)
     res.redirect('/')
 })
 
 router.get('/afiliadx/editar/:id', isAuthenticated,async (req, res) => {
+    await desplegable()
     var afiliadx = await Afiliadx.findById(req.params.id);
     afiliadx.fecha_nac = afiliadx.nacimiento.toJSON().split('T',1)[0]
-    res.render('afiliadx_edit',{afiliadx})
+    res.render('afiliadx_edit',{afiliadx, lugares})
 })
 
 router.post('/afiliadx/editar/:id', isAuthenticated, async (req, res) => {

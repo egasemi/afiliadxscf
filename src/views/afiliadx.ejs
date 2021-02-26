@@ -6,9 +6,9 @@
         <h2 class="text-center"><b>DNI: <%= afiliadx.dni %></b></h2>
     </div>
     <div class="card-body">
-        <h5 class="card-title">
+        <h3 class="card-title">
             <%= afiliadx.apellido + ' ' + afiliadx.nombre %>
-        </h5>
+        </h3>
         <p class="card-text">
             Domicilio: <b><%= afiliadx.domicilio %></b><br>
             Celu: <b><%= afiliadx.contacto.length > 4 ? 'Contacto: ' + afiliadx.contacto : '' %></b><br>
@@ -27,26 +27,28 @@
                 <label class="form-check-label" for="votante">Confirmadx para votar</label>
                 <input class="form-check-input" type="checkbox" id="votante" <%= afiliadx.estado.votante ? 'checked' : '' %>>
             </div>
-            <div class="form-check form-switch">
+            <div class="form-check form-switch mb-3">
                 <label class="form-check-label" for="voto">Votó</label>
                 <input class="form-check-input" type="checkbox" id="voto" <%= afiliadx.estado.voto ? 'checked' : '' %>>
             </div>
         <% } else { %>
-            <p class="card-text text-danger">Afiliación pendiente o caída</p>
+            <p class="card-text text-danger mb-3">Afiliación pendiente o caída</p>
         <% } %>
-        <div class="d-grid gap-2 mt-4">
-            <a class="btn btn-outline-primary" href="/afiliadx/editar/<%= afiliadx.id %>">Editar datos</a>
-            <a class="btn btn-outline-danger" href="/afiliadx/borrar/<%= afiliadx.id %>">Eliminar Afiliadx</a>
-            <a class="btn btn-outline-secondary" href="javascript:history.back()"> Volver Atrás</a>
+        <div class="row">
+            <div class="col d-grid gap-2 mb-3">
+                <a class="btn btn-outline-primary" href="/afiliadx/editar/<%= afiliadx.id %>">Editar datos</a>
+            </div>
+            <div class="col d-grid gap-2 mb-3">
+                <a class="btn btn-outline-danger" href="/afiliadx/borrar/<%= afiliadx.id %>">Eliminar Afiliadx</a>
+            </div> 
         </div>
-        
+   
     </div>
   </div>
   <script>
       $('.form-check-input').on('click',function () {
           var tipo = $(this).attr('id')
           var id = $('.card').attr('id')
-          console.log(tipo, id)
           location.replace(`/afiliadx/estado/${tipo}/${id}`)
       })
   </script>

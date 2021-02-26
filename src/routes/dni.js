@@ -42,7 +42,6 @@ router.get('/dni/:_dni/:_suma', isAuthenticated, async (req,res) => {
 
     if (resultado === parseInt(_suma)) {
         const consulta = await Afiliadx.findOne({dni: _dni});
-        console.log(consulta)
         if (consulta) {
             afiliadx._id = consulta._id
             if (consulta.confirmada === true) {

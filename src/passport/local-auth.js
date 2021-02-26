@@ -39,7 +39,6 @@ passport.use('local-login', new localStrategy({
     if(!afiliadx.comparePassword(password)) {
         return done(null, false, req.flash('loginMessage', 'Contraseña invalida'))
     }
-    console.log('pasó')
     done(null, afiliadx)
 }))
 

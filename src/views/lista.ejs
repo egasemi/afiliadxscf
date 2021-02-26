@@ -27,8 +27,8 @@
         <table class="table table-hover table-bordered" id="tabla">
             <thead class="table-ligth">
                 <tr>
+                    <th scope="col">DNI</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
                     <th scope="col">Dirección</th>
                     <th scope="col">Contacto</th>
                     <th scope="col">Ficha</th>
@@ -36,12 +36,12 @@
             </thead>
             <tbody>
                 <% for(var i = 0;i < lista.length; i++) {%>
-                    <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? '' : 'text-danger' %>" >
-                        <td scope="col"><%= lista[i].nombre%></td>
-                        <td scope="col"><%= lista[i].apellido%></td>
+                    <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? '' : 'text-danger text-decoration-line-through' %>" >
+                        <td scope="col"><%= lista[i].dni %> </td>
+                        <td scope="col"><%= `${lista[i].nombre}, ${lista[i].apellido}`%></td>
                         <td scope="col"><%= lista[i].domicilio%></td>
                         <td scope="col"><%= lista[i].contacto%></td>
-                        <td scope="col"><a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-info">Ver Ficha</a></td>
+                        <td scope="col" class="d-flex justify-content-center"><a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a></td>
                     </tr>
                     <%}%>
             </tbody>
@@ -52,31 +52,24 @@
             <div class="card <%= lista[i].confirmada ? 'border-success' : 'border-danger' %>" id="<%= lista[i].id %>">
                 <% if (lista[i].confirmada) { %>
                     <div class="card-header d-flex flex-row justify-content-between">
-                        <div class="p-2 text-success"><b><%= lista[i].dni %></b></div>
+                        <div class="p-2 text-success h2"><b><%= lista[i].dni %></b></div>
                         <div class="p-2 text-success">Confirmada</div>
                     </div>
                 <% } else { %>
                     <div class="card-header d-flex flex-row justify-content-between">
-                        <div class="p-2 text-danger"><b><%= lista[i].dni %></b></div>
+                        <div class="p-2 text-danger h2"><b><%= lista[i].dni %></b></div>
                         <div class="p-2 text-danger">Pendiente o caída</div>
                     </div>
                 <% } %> 
                 <div class="card-body d-grid gap-2" >
                     <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="card-title" id="nombreApellido">
-                                <%= lista[i].nombre %><br>
-                                <%= lista[i].apellido %><br>
-                                <small class="text-muted">(<%= lista[i].domicilio %>)</small>
-                            </h5>
-                            <p class="card-text"><%= lista[i].contacto %></p>
-                        </div>
+                        <h5 class="card-title" id="nombreApellido">
+                            <%= lista[i].nombre + ' ' + lista[i].apellido %><br>
+                            <small class="text-muted">(<%= lista[i].domicilio %>)</small>
+                        </h5>
+                        <p class="card-text"><%= lista[i].contacto %></p>
                     </div>
-                    <div class="row">
-                        <div class="col d-grid gap-2">
-                            <a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-info">Ver Ficha</a>
-                        </div>
-                    </div>
+                    <a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a>
                 </div>
             </div>
         <% } %>  
@@ -85,7 +78,6 @@
 <script>
     function submitSelect() {
         var selected = document.getElementById('lugar').value
-        console.log(selected);
         document.location.replace(`/lista/${selected}`)
         
     }

@@ -34,6 +34,20 @@
         <input type="text" name="profesion" id="profesion" class="form-control" autocomplete="off" placeholder="Profesion" value="<%= afiliadx.profesion %>" >
         <label for="profesion">Profesion</label>
     </div>
+    <div class="form-floating">
+        <select name="distrito" id="lugar" class="form-select">
+            <option value="" disabled>Elegí un lugar</option>
+            <% for( let i = 0; i < lugares.length; i++ ) { %>
+                <% if (lugares[i] === "") { %>
+                    <option value="">NINGUNO</option> 
+                <% } else {%>
+                    <option value="<%= lugares[i] %>" <%= lugares[i] === afiliadx.distrito ? 'selected': '' %> ><%= lugares[i] %></option>
+                <% } %>
+            
+            <% } %>
+        </select>
+        <label for="lugar">Lugar</label>
+    </div>
 
     <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="nombre" id="buscar">Enviar</button>
     <a href="/afiliadx/<%= afiliadx._id %>" class="btn btn-outline-secondary btn-lg">Cancelar</a>
