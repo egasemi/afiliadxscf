@@ -16,15 +16,16 @@
         <label for="apellido">Apellido</label>
     </div>
 
-    <div class="form-floating">
+    <!--div class="form-floating">
         <input type="number" name="suma" id ="suma" class="form-control" autocomplete="off" placeholder="cuenta" required>
-        <label for="suma" class="col-form-label">Escribí el resultado de <%= sum1 %> + <%= sum2 %></label>
-    </div>
+        <label for="suma" class="col-form-label">Escribí el resultado de <%#= sum1 %> + <#%= sum2 %></label>
+    </div-->
 
     <button class="btn btn-outline-success btn-lg" aria-describedby="nombre" id="buscar">Buscar</button>
 </form>
 
 <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %>"><%= afiliadx.texto %></div>
+<h5><%= consulta.length %> resultados</h5>
 <ul class="list-group list-group mb-4 <%= consulta.display %>">
     <% for( let i = 0; i < consulta.length; i++ ) { %>
         <% if (consulta[i].confirmada === true) { %>
