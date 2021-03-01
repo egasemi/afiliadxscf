@@ -29,14 +29,23 @@
 <ul class="list-group list-group mb-4 <%= consulta.display %>">
     <% for( let i = 0; i < consulta.length; i++ ) { %>
         <% if (consulta[i].confirmada === true) { %>
-            <li class="list-group-item list-group-item-success">
-                <%=consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> está afiliadx :)
-                <a href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
+            <li class="list-group-item list-group-item-success d-flex justify-content-between">
+                <div class="col">
+                    <%=consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> está afiliadx :)
+                </div>
+                <div class="col d-flex justify-content-between">
+                    <a class="btn btn-outline-primary btn-sm" href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
+                    <% if (consulta[i].estado.votante) { %>
+                        <a class="btn btn-outline-danger btn-sm" href="/afiliadx/estado/votante/<%= consulta[i]._id %>">Desmarcar como confirmadx</a>
+                    <% } else { %>
+                        <a class="btn btn-outline-success btn-sm" href="/afiliadx/estado/votante/<%= consulta[i]._id %>">Marcar como confirmadx</a>
+                    <% } %>
+                </div>
             </li>
         <% } else { %>
             <li class="list-group-item list-group-item-warning">
                 <%='La afiliación de '+ consulta[i].nombre + ' ' + consulta[i].apellido + ' DNI: '%><b><%=consulta[i].dni%></b> fue enviada pero rebotó o se cayó :/ 
-                <a href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
+                <a class="btn btn-outline-primary btn-sm" href="/afiliadx/<%= consulta[i]._id %> ">Ver Ficha</a>
             </li>
                 
         <% } %>

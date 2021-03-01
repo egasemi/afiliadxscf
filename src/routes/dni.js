@@ -9,7 +9,8 @@ router.get('/dni', isAuthenticated,(req,res) => {
     afiliadx = {
         texto: '',
         display: 'invisible',
-        color: ''
+        color: '',
+        votante: false
     }
     res.render('dni',{afiliadx});
 });
@@ -35,10 +36,11 @@ router.get('/dni/:_dni', isAuthenticated, async (req,res) => {
         afiliadx._id = consulta._id
         if (consulta.confirmada === true) {
             afiliadx.texto = `${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} está afiliadx! :)`;            
-            afiliadx.color = 'success'
+            afiliadx.color = 'success';
+            afiliadx.conf = consulta.estado.votante
         } else {
             afiliadx.texto = `La afiliación de ${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} fue enviada pero rebotó o se cayó :/`;
-            afiliadx.color = 'warning'
+            afiliadx.color = 'warning';
         }
     } else {
         afiliadx.texto = 'No hay afiliadxs con ese DNI';

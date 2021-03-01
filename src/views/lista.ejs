@@ -32,6 +32,7 @@
                     <th scope="col">Dirección</th>
                     <th scope="col">Contacto</th>
                     <th scope="col">Ficha</th>
+                    <th scope="col">Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +43,13 @@
                         <td scope="col"><%= lista[i].domicilio%></td>
                         <td scope="col"><%= lista[i].contacto%></td>
                         <td scope="col" class="d-flex justify-content-center"><a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a></td>
+                        <td scope="col">
+                            <% if (lista[i].estado.votante) { %>
+                                <a class="btn btn-outline-danger" href="/afiliadx/estado/votante/<%= lista[i]._id %>">Desmarcar como confirmadx</a>
+                            <% } else { %>
+                                <a class="btn btn-outline-success" href="/afiliadx/estado/votante/<%= lista[i]._id %>">Marcar como confirmadx</a>
+                            <% } %>
+                        </td>
                     </tr>
                     <%}%>
             </tbody>
