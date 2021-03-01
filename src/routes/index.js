@@ -9,8 +9,9 @@ router.get('/', isAuthenticated, (req, res) => {
 } )
 
 router.get('/stats', isAuthenticated, async (req,res) => {
-    var coso = await Afiliadx.distinct('dni',{confirmada: true});
-    var total = coso.length
+    var lista = await Afiliadx.find({'estado.votante' : true})
+    var query = await Afiliadx.distinct('dni',{confirmada: true});
+    var total = query.length
 
     var numeros = {
         total: total,
@@ -24,7 +25,7 @@ router.get('/stats', isAuthenticated, async (req,res) => {
     numeros.por_voto = Math.round((numeros.voto * 100)) / numeros.minimo;
     numeros.por_votante = Math.round((numeros.votante * 100)) / numeros.minimo;
  
-    res.render('index',{numeros})
+    res.render('index',{numeros, lista})
 })
 
 

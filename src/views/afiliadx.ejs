@@ -11,12 +11,14 @@
         </h3>
         <p class="card-text">
             Domicilio: <b><%= afiliadx.domicilio %></b><br>
-            Celu: <b><%= afiliadx.contacto.length > 4 ? 'Contacto: ' + afiliadx.contacto : '' %></b><br>
             Edad: <b><%= afiliadx.edad %></b><br>
             Profesion: <b><%= afiliadx.profesion %></b><br>
             Fecha de nacimiento: <b><%= afiliadx.nacimiento.toJSON().split('T',1)[0] %></b><br>
-
+            Celu: <b><%= afiliadx.contacto %></b>
         </p>
+        <% if (afiliadx.contacto > 4) { %>
+            <a class="btn btn-outline-success btn-sm mb-3" href="https://wa.me/549<%= afiliadx.contacto %>">Enviar WP</a> 
+        <% } %>
         
         <% if (afiliadx.confirmada) { %>
             <div class="form-check form-switch">

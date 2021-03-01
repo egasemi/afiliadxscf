@@ -8,7 +8,7 @@ function numRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-router.get('/nombre', isAuthenticated,(req,res) => {
+router.get('/nombre', isAuthenticated, (req,res) => {
 
     sum1 = numRandom(1,11)
     sum2 = numRandom(1,11)
@@ -37,14 +37,14 @@ router.post('/nombre', isAuthenticated, (req, res) => {
 
 })
 
-router.get('/nombre/:_suma/:_apellido/:_nombre',isAuthenticated , async (req, res) => {
+router.get('/nombre/:_suma/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
     const { _nombre, _apellido, _suma } = req.params;
     afiliadx = {
         texto: '',
         color: '',
         display: 'visible'
     }
-    if (resultado ==! _suma) {
+    if (!(resultado === parseInt(_suma))) {
         consulta = {display:'invisible'};
         afiliadx = {
             texto :'Sacaste mal la cuenta',

@@ -36,9 +36,9 @@
             </thead>
             <tbody>
                 <% for(var i = 0;i < lista.length; i++) {%>
-                    <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? '' : 'text-danger text-decoration-line-through' %>" >
+                    <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? 'text-success fw-bold' : 'text-danger text-decoration-line-through' %>" >
                         <td scope="col"><%= lista[i].dni %> </td>
-                        <td scope="col"><%= `${lista[i].nombre}, ${lista[i].apellido}`%></td>
+                        <td scope="col"><%= `${lista[i].apellido}, ${lista[i].nombre}`%></td>
                         <td scope="col"><%= lista[i].domicilio%></td>
                         <td scope="col"><%= lista[i].contacto%></td>
                         <td scope="col" class="d-flex justify-content-center"><a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a></td>
