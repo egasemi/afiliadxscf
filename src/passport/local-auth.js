@@ -50,7 +50,7 @@ function isAuthenticated(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-    if (req.isAuthenticated() || req.user.dni === 37145336){
+    if (req.isAuthenticated() && req.user.id === "60302e7d177b55a07fa95670"){
         return next()
     }
     res.redirect('/login')

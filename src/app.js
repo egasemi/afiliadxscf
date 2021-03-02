@@ -27,6 +27,7 @@ const loginRoutes = require('./routes/login');
 const singinRoutes = require('./routes/singin');
 const listaRoutes  = require('./routes/lista');
 const afiliadxRoutes = require('./routes/afiliadx');
+const calleRoutes = require('./routes/calle');
 
 // configuración
 
@@ -54,7 +55,7 @@ app.use((req, res, next) => {
 
 // rutas
 
-app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes, afiliadxRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes, afiliadxRoutes, calleRoutes);
 
 // arranca el server
 
