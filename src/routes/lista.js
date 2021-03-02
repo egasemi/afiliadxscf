@@ -26,7 +26,7 @@ router.get('/lista', isAuthenticated, async (req, res) => {
 router.get('/lista/:_distrito', isAuthenticated, async (req, res) => {
     await desplegable()
     var { _distrito } = req.params;
-    var lista = await Afiliadx.find({distrito: _distrito})
+    var lista = await Afiliadx.find({distrito: _distrito}).sort({apellido: 'asc'})
     var count  = lista.length
     res.render('lista',{
         lista,

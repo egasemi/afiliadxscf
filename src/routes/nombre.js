@@ -23,8 +23,9 @@ router.post('/nombre', isAuthenticated, (req, res) => {
     const { nombre, apellido} = req.body;
     if (nombre === '') {
         res.redirect(`nombre/${apellido}/*`)
+    } else { 
+        res.redirect(`nombre/${apellido}/${nombre}`)
     }
-    res.redirect(`nombre/${apellido}/${nombre}`)
 
 })
 
@@ -45,7 +46,7 @@ router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
             $regex: `${_apellido}`,
             $options: 'si'
         }
-    })
+    }).sort({apellido: 'asc',nombre:'asc'})
     if (consulta.length > 0) {
 
         consulta.display = 'visible';
@@ -58,7 +59,7 @@ router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
                 $regex: `${_apellido}`,
                 $options: 'si'
             }
-        })
+        }).sort({apellido: 'asc', nombre: 'asc'})
 
         if (consulta.length > 0) {
 

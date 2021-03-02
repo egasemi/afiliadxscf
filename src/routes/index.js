@@ -9,7 +9,7 @@ router.get('/', isAuthenticated, (req, res) => {
 } )
 
 router.get('/stats', isAuthenticated, async (req,res) => {
-    var lista = await Afiliadx.find({'estado.votante' : true})
+    var lista = await Afiliadx.find({'estado.votante' : true}).sort({apellido: 'asc'})
     var query = await Afiliadx.distinct('dni',{confirmada: true});
     var total = query.length
 
@@ -22,8 +22,8 @@ router.get('/stats', isAuthenticated, async (req,res) => {
     }
     numeros.faltan_confirmar = numeros.minimo - numeros.votante;
     numeros.faltan_votar = numeros.minimo - numeros.voto;
-    numeros.por_voto = Math.round((numeros.voto * 100)) / numeros.minimo;
-    numeros.por_votante = Math.round((numeros.votante * 100)) / numeros.minimo;
+    numeros.por_voto = Math.round((numeros.voto * 100) / numeros.minimo);
+    numeros.por_votante = Math.round((numeros.votante * 100) / numeros.minimo);
  
     res.render('index',{numeros, lista})
 })
