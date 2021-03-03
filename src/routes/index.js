@@ -16,7 +16,7 @@ router.get('/stats', async (req,res) => {
 
     var numeros = {
         total: total,
-        minimo: Math.round(total * 0.1),
+        minimo: Math.round(total * 0.105),
         votante : await Afiliadx.distinct('dni', {'estado.votante':true}).countDocuments(),
         contactadx : await Afiliadx.distinct('dni', {'estado.contactadx':true}).countDocuments(),
         voto : await Afiliadx.distinct('dni', {'estado.voto':true}).countDocuments()
