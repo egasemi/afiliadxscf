@@ -36,15 +36,16 @@ router.get('/afiliadx/borrar/:id', isAuthenticated, async (req, res) => {
 
 router.get('/afiliadx/editar/:id', isAuthenticated,async (req, res) => {
     await desplegable()
+    back = req.headers.referer
     var afiliadx = await Afiliadx.findById(req.params.id);
     afiliadx.fecha_nac = afiliadx.nacimiento.toJSON().split('T',1)[0]
-    res.render('afiliadx_edit',{afiliadx, lugares})
+    res.render('afiliadx_edit',{afiliadx, lugares, back})
 })
 
 router.post('/afiliadx/editar/:id', isAuthenticated, async (req, res) => {
     var afiliadx = await Afiliadx.findByIdAndUpdate(req.params.id, req.body)
     afiliadx.save()
-    res.redirect('/afiliadx/' + req.params.id)
+    res.redirect(back)
 })
 
 module.exports = router

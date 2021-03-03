@@ -6,16 +6,13 @@ const isAuthenticated = require('../passport/local-auth');
 
 
 router.get('/nombre', isAuthenticated, (req,res) => {
-
-    afiliadx = {
-        texto: '',
-        display: 'invisible',
-        color: ''
-    }
-    consulta = {display : 'invisible'}
+    var lista = false
+    var _nombre = ''
+    var _apellido = ''
     res.render('nombre',{
-        consulta,
-        afiliadx
+        lista,
+        _nombre,
+        _apellido
     });
 });
 
@@ -30,14 +27,9 @@ router.post('/nombre', isAuthenticated, (req, res) => {
 })
 
 router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
-    const { _nombre, _apellido } = req.params;
-    afiliadx = {
-        texto: '',
-        color: '',
-        display: 'visible'
-    }
+    var { _nombre, _apellido } = req.params;
 
-    var consulta = await Afiliadx.find({
+    var lista = await Afiliadx.find({
         nombre: {
             $regex: `${_nombre}`,
             $options: 'si'
@@ -47,38 +39,23 @@ router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
             $options: 'si'
         }
     }).sort({apellido: 'asc',nombre:'asc'})
-    if (consulta.length > 0) {
 
-        consulta.display = 'visible';
-        afiliadx.display = 'invisible'
+    if (lista.length === 0) {
+        var query = `(?=.*${_apellido})(?=.*${_nombre})`
 
-    } else {
-
-        var consulta = await Afiliadx.find({
+        var lista = await Afiliadx.find({
             apellido:{
-                $regex: `${_apellido}`,
+                $regex: query,
                 $options: 'si'
             }
         }).sort({apellido: 'asc', nombre: 'asc'})
-
-        if (consulta.length > 0) {
-
-            consulta.display = 'visible';
-            afiliadx.display = 'invisible';
-        } else {
-            consulta.display = 'invisible';
-            afiliadx = {
-                display: 'visible',
-                texto: 'No hay afiliadxs con ese nombre',
-                color: 'warning'
-            }
-        }
     }
 
 
     res.render('nombre',{
-        consulta,
-        afiliadx
+        lista,
+        _nombre,
+        _apellido
     })
 })
 

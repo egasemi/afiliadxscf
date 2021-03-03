@@ -13,7 +13,7 @@ require('./passport/local-auth');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/personascf',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify:true
+    useFindAndModify:false
 })
     .then(db => console.log('db conectada'))
     .catch(err => console.log(err));

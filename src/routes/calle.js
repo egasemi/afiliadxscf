@@ -7,16 +7,9 @@ const isAuthenticated = require('../passport/local-auth');
 
 router.get('/calle', isAuthenticated, (req,res) => {
     var _calle = ''
-
-    afiliadx = {
-        texto: '',
-        display: 'invisible',
-        color: ''
-    }
-    consulta = {display : 'invisible'}
+    var lista = false
     res.render('calle',{
-        consulta,
-        afiliadx,
+        lista,
         _calle
     });
 });
@@ -29,32 +22,15 @@ router.post('/calle', isAuthenticated, (req,res)=> {
 
 
 router.get('/calle/:_calle', isAuthenticated, async (req, res) => {
-    const _calle = req.params._calle;
-    afiliadx = {
-        texto: '',
-        color: '',
-        display: 'visible'
-    }
-
-    var consulta = await Afiliadx.find({
+    const _calle = req.params._calle
+    const lista = await Afiliadx.find({
         domicilio: {
-            $regex: `${_calle}`,
+            $regex: _calle,
             $options: 'si'
         }
-
-    }).sort({apellido:'asc'})
-
-    if (consulta.length > 0) {
-
-        consulta.display = 'visible';
-        afiliadx.display = 'invisible'
-
-    }
-
-
+    }).sort({domicilio: 'asc'})
     res.render('calle',{
-        consulta,
-        afiliadx,
+        lista,
         _calle
     })
 })

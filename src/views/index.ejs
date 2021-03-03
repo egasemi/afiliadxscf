@@ -8,13 +8,12 @@
     <form class="d-grid gap-2" action="/nombre">
         <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por Nombre y Apellido</button>
     </form>
-    <form class="d-grid gap-2" action="/lista">
-        <button type="submit" class="btn btn-outline-primary btn-lg">Ver listas por Distrito</button>
-    </form>
     <form class="d-grid gap-2" action="/calle">
-        <button type="submit" class="btn btn-outline-primary btn-lg">Ver listas por Calle</button>
+        <button type="submit" class="btn btn-outline-primary btn-lg">Busar por Calle</button>
     </form>
-
+    <form class="d-grid gap-2" action="/lista">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Ver listas por Lugar</button>
+    </form>
     <a class="btn btn-outline-primary btn-lg" href="/stats"><%= numeros.total > 1 ? 'Actualizar' : 'Ver estadísticas' %> </a>
 
     <% if (numeros.total > 1) { %>
@@ -24,14 +23,14 @@
         </h1>
         <h4>Votantes confirmadxs: <b><%= numeros.votante%></b></h4>
         <h6>Faltan: <b><%= numeros.faltan_confirmar%></b></h6>
-        <div class="progress shadow-lg mb-5 bg-white rounded" style="height: 50px;">              
+        <div class="progress shadow-lg mb-5 bg-white rounded fs-2" style="height: 50px;">              
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                 role="progressbar" 
                 style=<%=`width:${numeros.por_votante}%; font-size: 150%` %>
                 aria-valuenow="<%= numeros.por_votante %>"
                 aria-valuemin="0"
                 aria-valuemax="100">
-                <b><%= numeros.por_votante %>% (<%= numeros.votante %> )</b>
+                <b><%= numeros.por_votante %>% (<%= numeros.votante %>)</b>
                 </div>
         </div>
         <!--h4>Votos: <b><%= numeros.voto%></b></h4>
@@ -46,79 +45,7 @@
                 <b><%= numeros.por_voto %>% (<%= numeros.voto %> )</b>
                 </div>
         </div-->
-
-        <% if (lista) { %>
-            <div class="form-floating d-none d-sm-block">
-                <input type="text" name="buscador" id="buscador" class="form-control" autocomplete="off" placeholder="Buscador" required>
-                <label for="buscador">Buscador</label>
-            </div>
-            <h3>Lista de votantes confirmadxs</h3>
-            <div class="table-responsive d-none d-sm-block">
-                <table class="table table-hover table-bordered" id="tabla">
-                    <thead class="table-ligth">
-                        <tr>
-                            <th scope="col">DNI</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Dirección</th>
-                            <th scope="col">Contacto</th>
-                            <th scope="col">Ficha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(var i = 0;i < lista.length; i++) {%>
-                            <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? 'text-success fw-bold' : 'text-danger text-decoration-line-through' %>" >
-                                <td scope="col"><%= lista[i].dni %> </td>
-                                <td scope="col"><%= `${lista[i].apellido}, ${lista[i].nombre}`%></td>
-                                <td scope="col"><%= lista[i].domicilio%></td>
-                                <td scope="col"><%= lista[i].contacto%></td>
-                                <td scope="col" class="d-flex justify-content-center"><a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a></td>
-                            </tr>
-                            <%}%>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-group d-block d-sm-none mt-4" id="cards">
-                <% for (var i = 0;i < lista.length; i++) {%>
-                    <div class="card <%= lista[i].confirmada ? 'border-success' : 'border-danger' %>" id="<%= lista[i].id %>">
-                        <% if (lista[i].confirmada) { %>
-                            <div class="card-header d-flex flex-row justify-content-between">
-                                <div class="p-2 text-success h2"><b><%= lista[i].dni %></b></div>
-                                <div class="p-2 text-success">Confirmada</div>
-                            </div>
-                        <% } else { %>
-                            <div class="card-header d-flex flex-row justify-content-between">
-                                <div class="p-2 text-danger h2"><b><%= lista[i].dni %></b></div>
-                                <div class="p-2 text-danger">Pendiente o caída</div>
-                            </div>
-                        <% } %> 
-                        <div class="card-body d-grid gap-2" >
-                            <div class="row align-items-center">
-                                <h5 class="card-title" id="nombreApellido">
-                                    <%= lista[i].nombre + ' ' + lista[i].apellido %><br>
-                                    <small class="text-muted">(<%= lista[i].domicilio %>)</small>
-                                </h5>
-                                <p class="card-text"><%= lista[i].contacto %></p>
-                            </div>
-                            <a href="/afiliadx/<%= lista[i]._id %>" class="btn btn-outline-secondary">Ver Ficha</a>
-                        </div>
-                    </div>
-                <% } %>  
-            </div>
-        <% } %>
-        <script>
-            function submitSelect() {
-                var selected = document.getElementById('lugar').value
-                document.location.replace(`/lista/${selected}`)
-                
-            }
-            $("#buscador").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#tabla tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        
-        </script>
-        <% } %> 
+<% } %>
+<%- include('partials/_table') %> 
 
 <%- include('partials/_footer') %>

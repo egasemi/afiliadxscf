@@ -4,8 +4,9 @@ const isAuthenticated = require('../passport/local-auth')
 const Afiliadx = require('../models/Afiliadx')
 
 router.get('/', isAuthenticated, (req, res) => {
+    var lista = false
     var numeros = {}
-    res.render('index',{numeros})
+    res.render('index',{numeros, lista})
 } )
 
 router.get('/stats', isAuthenticated, async (req,res) => {
