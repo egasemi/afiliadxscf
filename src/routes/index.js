@@ -9,7 +9,7 @@ router.get('/', isAuthenticated, (req, res) => {
     res.render('index',{numeros, lista})
 } )
 
-router.get('/stats', isAuthenticated, async (req,res) => {
+router.get('/stats', async (req,res) => {
     var lista = await Afiliadx.find({'estado.votante' : true}).sort({updatedAt: 'desc'})
     var query = await Afiliadx.distinct('dni',{confirmada: true});
     var total = query.length
