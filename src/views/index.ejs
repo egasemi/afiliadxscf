@@ -1,6 +1,5 @@
 <%- include('partials/_header') %>
 <%- include('navbar') %>
-    <meta http-equiv="refresh" content="7">
     <h1>Consulta Afiliadxs</h1>
     <form class="d-grid gap-2" action="/dni" method="GET">
         <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por DNI</button>
@@ -20,7 +19,19 @@
         <h1>Total de afiliadx: <b><%= numeros.total%></b></h1>
         <h1>Mínimo de votantes: <b><%= numeros.minimo%></b></h1>
 
-        </h1>
+        <h4>Votos: <b><%= numeros.voto%></b></h4>
+        <h6>Faltan: <b><%= numeros.minimo - numeros.voto%></b></h6>
+        <div class="progress shadow-lg mb-5 bg-white rounded fs-2" style="height: 50px;">              
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                role="progressbar" 
+                tyle=<%=`width:${numeros.por_voto}%; font-size: 150%` %>
+                aria-valuenow="<%= numeros.por_voto %>"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <b><%= numeros.por_voto %>% (<%= numeros.voto %>)</b>
+                </div>
+        </div>
+
         <h4>Votantes confirmadxs: <b><%= numeros.votante%></b></h4>
         <h6>Faltan: <b><%= numeros.faltan_confirmar%></b></h6>
         <div class="progress shadow-lg mb-5 bg-white rounded fs-2" style="height: 50px;">              
@@ -33,18 +44,6 @@
                 <b><%= numeros.por_votante %>% (<%= numeros.votante %>)</b>
                 </div>
         </div>
-        <!--h4>Votos: <b><%= numeros.voto%></b></h4>
-        <h6>Faltan: <b><%= numeros.faltan_votar%></b></h6>
-        <div class="progress shadow-lg mb-5 bg-white rounded" style="height: 50px;">              
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                role="progressbar" 
-                style='<%=`width:${numeros.por_voto}%; font-size: 150%` %>'
-                aria-valuenow="<%= numeros.por_voto %>"
-                aria-valuemin="0"
-                aria-valuemax="100">
-                <b><%= numeros.por_voto %>% (<%= numeros.voto %> )</b>
-                </div>
-        </div-->
 <% } %>
 <%- include('partials/_table') %> 
 

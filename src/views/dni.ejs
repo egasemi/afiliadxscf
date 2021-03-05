@@ -19,17 +19,8 @@
     </div-->
 
     <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="dni" id="buscar">Buscar</button>
-
-    <div class="alert alert-<%= afiliadx.color + ' ' + afiliadx.display %> d-flex justify-content-between">
-        <%= afiliadx.texto %>
-        <a class="btn btn-outline-primary" href="/afiliadx/<%= afiliadx._id %> ">Ver Ficha</a>
-        <% if (!afiliadx.conf) { %>
-            <a class="btn btn-outline-success" href="/afiliadx/estado/votante/<%= afiliadx._id %>">Marcar como confirmadx</a>
-        <% } else { %>
-            <a class="btn btn-outline-danger" href="/afiliadx/estado/votante/<%= afiliadx._id %>">Desmarcar como confirmadx</a>
-        <% } %>
-    </div>
     
 </form>
+<%- include('partials/_table') %> 
 
 <%- include('partials/_footer') %>

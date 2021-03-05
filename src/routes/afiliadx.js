@@ -24,7 +24,7 @@ router.get('/afiliadx/estado/:tipo/:id', isAuthenticated, async (req, res) => {
     var afiliadx = await Afiliadx.findById(id);
     afiliadx.estado[tipo] = !afiliadx.estado[tipo];
     afiliadx.save()
-    res.redirect('back')
+    res.redirect(`${req.headers.referer}#${id}`)
 })
 
 router.get('/afiliadx/borrar/:id', isAuthenticated, async (req, res) => {

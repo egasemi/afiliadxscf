@@ -5,14 +5,9 @@ const isAuthenticated = require('../passport/local-auth');
 
 
 router.get('/dni', isAuthenticated,(req,res) => {
-
-    afiliadx = {
-        texto: '',
-        display: 'invisible',
-        color: '',
-        votante: false
-    }
-    res.render('dni',{afiliadx});
+    var lista = false
+    var _dni = ''
+    res.render('dni',{lista, _dni});
 });
 
 router.post('/dni', isAuthenticated, (req,res)=> {
@@ -24,30 +19,9 @@ router.post('/dni', isAuthenticated, (req,res)=> {
 router.get('/dni/:_dni', isAuthenticated, async (req,res) => {
 
     const _dni = req.params._dni;
-    afiliadx = {
-        texto : '',
-        display: 'visible',
-        color: ''
-    }
+    var lista = await Afiliadx.find({dni: _dni})
 
-    const consulta = await Afiliadx.findOne({dni: _dni});
-
-    if (consulta) {
-        afiliadx._id = consulta._id
-        if (consulta.confirmada === true) {
-            afiliadx.texto = `${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} está afiliadx! :)`;            
-            afiliadx.color = 'success';
-            afiliadx.conf = consulta.estado.votante
-        } else {
-            afiliadx.texto = `La afiliación de ${consulta.nombre} ${consulta.apellido} DNI: ${consulta.dni} fue enviada pero rebotó o se cayó :/`;
-            afiliadx.color = 'warning';
-        }
-    } else {
-        afiliadx.texto = 'No hay afiliadxs con ese DNI';
-        afiliadx.color = 'warning'
-    }
-
-    res.render('dni',{afiliadx});
+    res.render('dni',{lista, _dni});
 });
 
 module.exports = router;
