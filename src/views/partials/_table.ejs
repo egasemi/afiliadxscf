@@ -28,7 +28,7 @@
                         <td scope="col"><%= lista[i].domicilio%></td>
                         <td scope="col"><%= lista[i].contacto %></td>
                         <td socpe="col">
-                            <% if (lista[i].contacto !== '') { %>
+                            <% if (lista[i].contacto !== ''|| lista[i].contacto !== undefined) { %>
                                 <div class="btn-group">
                                     <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
                                     <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
