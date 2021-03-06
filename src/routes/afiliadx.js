@@ -45,7 +45,7 @@ router.get('/afiliadx/editar/:id', isAuthenticated,async (req, res) => {
 router.post('/afiliadx/editar/:id', isAuthenticated, async (req, res) => {
     var afiliadx = await Afiliadx.findByIdAndUpdate(req.params.id, req.body)
     afiliadx.save()
-    res.redirect(`${back}#${id}`)
+    res.redirect(`${back}#${req.params.id}`)
 })
 
 module.exports = router
