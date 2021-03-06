@@ -28,10 +28,14 @@
                         <td scope="col"><%= lista[i].domicilio%></td>
                         <td scope="col"><%= lista[i].contacto %></td>
                         <td socpe="col">
-                            <div class="btn-group">
+                            <% if (lista[i].contacto !== '') { %>
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
+                                    <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
+                                </div>
+                            <% } else { %>
                                 <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                                <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
-                            </div>
+                            <% } %>
                         </td>
                         <td scope="col">
                             <div class="btn-group">
@@ -86,22 +90,14 @@
                     </div>
                     <%= lista[i].contacto %>
                     <div class="d-grid gap-2 d-md-block">
-                        <div class="btn-group">
+                        <% if (lista[i].contacto !== '') { %>
+                            <div class="btn-group">
+                                <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
+                                <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
+                            </div>
+                        <% } else { %>
                             <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                            <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
-                        </div>
-                        <div class="btn-group">
-                            <% if (!lista[i].confirmada) { %>
-                                <a class="btn btn-outline-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                                <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                            <% } else if (lista[i].estado.voto){ %>
-                                <a class="btn btn-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                                <a class="btn btn-outline-danger btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                            <% } else { %>
-                                <a class="btn btn-outline-success btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                                <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                            <% } %>
-                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
