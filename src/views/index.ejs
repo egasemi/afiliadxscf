@@ -1,6 +1,6 @@
 <%- include('partials/_header') %>
 <%- include('navbar') %>
-    <h1>Consulta Afiliadxs</h1>
+    <h1>Personas CF</h1>
     <form class="d-grid gap-2" action="/dni" method="GET">
         <button type="submit" class="btn btn-outline-primary btn-lg">Buscar por DNI</button>
     </form>
@@ -10,10 +10,13 @@
     <form class="d-grid gap-2" action="/calle">
         <button type="submit" class="btn btn-outline-primary btn-lg">Busar por Calle</button>
     </form>
-    <form class="d-grid gap-2" action="/lista">
+    <form class="d-grid gap-2" action="/lugar">
         <button type="submit" class="btn btn-outline-primary btn-lg">Ver listas por Lugar</button>
     </form>
-    <a class="btn btn-outline-primary btn-lg" href="/stats"><%= numeros.total > 1 ? 'Actualizar' : 'Ver estadísticas' %> </a>
+    <form class="d-grid gap-2" action="/vinculo">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Ver listas por Vínculos</button>
+    </form>
+    <!--a class="btn btn-outline-primary btn-lg" href="/stats"><%# numeros.total > 1 ? 'Actualizar' : 'Ver estadísticas' %> </a-->
 
     <% if (numeros.total > 1) { %>
         <h1>Total de afiliadx: <b><%= numeros.total%></b></h1>

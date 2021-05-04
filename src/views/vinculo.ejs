@@ -1,16 +1,16 @@
 <%- include('partials/_header') %>
 <%- include('navbar') %>
 
-<h3>Afiliadxs por Lugar</h3>
+<h3>Personas por vinculo</h3>
 
 <div class="form-floating">
     <select name="distrito" id="lugar" class="form-select" onchange="submitSelect();">
-        <option value="" disabled>Elegí un lugar</option>
-        <% for( let i = 0; i < lugares.length; i++ ) { %>
-            <% if (lugares[i] === "") { %>
+        <option value="" disabled selected>Elegí un vinculo</option>
+        <% for( let i = 0; i < vinculos.length; i++ ) { %>
+            <% if (vinculos[i] === "") { %>
                 <option value="">NINGUNO</option> 
             <% } else {%>
-                <option value="<%= lugares[i] %>" <%= lugares[i] === _distrito ? 'selected': '' %> ><%= lugares[i] %></option>
+                <option value="<%= vinculos[i] %>" <%= vinculos[i] === _vinculo ? 'selected': '' %> ><%= vinculos[i] %></option>
             <% } %>
         
         <% } %>
@@ -21,7 +21,7 @@
 <script>
     function submitSelect() {
         var selected = document.getElementById('lugar').value
-        document.location.replace(`/lista/${selected}`)
+        document.location.replace(`/vinculo/${selected}/1`)
         
     }
     $("#buscador").on("keyup", function() {

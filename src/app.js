@@ -25,9 +25,11 @@ const dniRoutes = require('./routes/dni');
 const nommbreRoutes = require('./routes/nombre');
 const loginRoutes = require('./routes/login');
 const singinRoutes = require('./routes/singin');
-const listaRoutes  = require('./routes/lista');
+const lugarRoutes  = require('./routes/lugar');
 const afiliadxRoutes = require('./routes/afiliadx');
 const calleRoutes = require('./routes/calle');
+const personaRoutes = require('./routes/persona');
+const vinculoRoutes = require('./routes/vinculo')
 
 // configuración
 
@@ -38,7 +40,7 @@ app.set('view engine', 'ejs');
 // middlewares
 
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: process.env.SECRET || 'securesecret',
     resave: false,
@@ -55,7 +57,7 @@ app.use((req, res, next) => {
 
 // rutas
 
-app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, listaRoutes, afiliadxRoutes, calleRoutes);
+app.use(indexRoutes,dniRoutes,nommbreRoutes, loginRoutes, singinRoutes, lugarRoutes, afiliadxRoutes, calleRoutes, personaRoutes, vinculoRoutes);
 
 // arranca el server
 

@@ -1,12 +1,14 @@
-<% if (lista) { %>
-    <% if (lista.length < 1) { %>
+<% if (lista.docs) { %>
+    <% if (lista.docs.length < 1) { %>
         <h6 class='text-danger'>Sin resultados</h6>
     <% } else { %>
         <div class="form-floating d-none d-sm-block">
             <input type="text" name="buscador" id="buscador" class="form-control" autocomplete="off" placeholder="Buscador" required>
             <label for="buscador">Filtrar</label>
         </div>
-    
+        <% if (lista.totalDocs > 1) { %>
+            <h3>Registros encontrados: <%= lista.totalDocs %> </h3>
+        <% } %>
         <div class="table-responsive d-none d-sm-block">
             <table class="table table-hover table-bordered" id="tabla">
                 <thead class="table-ligth">
@@ -16,93 +18,111 @@
                         <th scope="col">Dirección</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Acciones</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Difusión WP</th>
+                        <% vinculos.forEach(v => { %>
+                            <th scope="col" class="text-capitalize"><%= v %></th> 
+                        <% }) %>
                     </tr>
                 </thead>
     <% } %>
             <tbody>
-                <% for(var i = 0;i < lista.length; i++) {%>
-                    <tr id='<%= lista[i].id %>' scope="row" class="fila <%= lista[i].confirmada ? 'text-success fw-bold' : 'text-danger text-decoration-line-through' %>" >
-                        <td scope="col"><%= lista[i].dni %> </td>
-                        <td scope="col"><%= `${lista[i].apellido}, ${lista[i].nombre}`%></td>
-                        <td scope="col"><%= lista[i].domicilio%></td>
-                        <td scope="col"><%= lista[i].contacto %></td>
+                <% for(var i = 0;i < lista.docs.length; i++) {%>
+                    <tr id='<%= lista.docs[i].id %>' scope="row" class="fila" >
+                        <td scope="col"><%= lista.docs[i].dni %> </td>
+                        <td scope="col"><%= `${lista.docs[i].apellido}, ${lista.docs[i].nombre}`%></td>
+                        <td scope="col"><%= lista.docs[i].domicilio%></td>
+                        <td scope="col"><%= lista.docs[i].contacto.numero %></td>
                         <td socpe="col">
-                            <% if (lista[i].contacto !== ''|| lista[i].contacto !== undefined) { %>
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                                    <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
-                                </div>
-                            <% } else { %>
-                                <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                            <% } %>
-                        </td>
-                        <td scope="col">
                             <div class="btn-group">
-                                <% if (!lista[i].confirmada) { %>
-                                    <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                                    <a class="btn btn-outline-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                                <% } else if (lista[i].estado.voto){ %>
-                                    <a class="btn btn-outline-danger btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                                    <a class="btn btn-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                                <% } else { %>
-                                    <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                                    <a class="btn btn-outline-success btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
+                                <a class="btn btn-outline-secondary btn-sm" href="/persona/editar/<%= lista.docs[i]._id %>">Editar</a>
+                                <a class="btn btn-outline-primary btn-sm" href="/persona/<%= lista.docs[i]._id %>">Ver ficha</a>
+                                <% if (lista.docs[i].contacto.numero > 0) { %>                                    
+                                    <a href="http://wa.me/549<%=lista.docs[i].contacto.numero %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
                                 <% } %>
                             </div>
                         </td>
+                        <td scope="col">
+                            <div class="btn-group">
+                                <% if (lista.docs[i].contacto.respuesta){ %>
+                                    <a class="btn btn-outline-danger btn-sm" href="/persona/respuesta/<%= lista.docs[i]._id %>">Desuscribir</a>
+                                    <a class="btn btn-success btn-sm disabled" href="/persona/respuesta/<%= lista.docs[i]._id %>">Suscripta</a>
+                                <% } else { %>
+                                    <a class="btn btn-danger btn-sm disabled" href="/persona/respuesta/<%= lista.docs[i]._id %>">Desuscripta</a>
+                                    <a class="btn btn-outline-success btn-sm" href="/persona/respuesta/<%= lista.docs[i]._id %>">Suscribir</a>
+                                <% } %>
+                            </div>
+                        </td>
+                        <% for( let k = 0; k < vinculos.length; k++ ) { %>
+                            <td scope="col"><%= JSON.stringify(lista.docs[i].vinculos[vinculos[k]]) === '{}' ? 'x' : '✓' %></td>
+                        <% } %>
                     </tr>
-                    <%}%>
+                <%}%>
             </tbody>
         </table>
     </div>
     <div class="card-group d-block d-sm-none mt-4" id="cards">
-        <% for (var i = 0;i < lista.length; i++) {%>
-            <div class="card <%= lista[i].confirmada ? 'border-success' : 'border-danger' %>" id="<%= lista[i].id %>">
+        <% for (var i = 0;i < lista.docs.length; i++) {%>
+            <div class="card" id="<%= lista.docs[i].id %>">
                 <div class="card-header d-flex flex-row justify-content-between">
 
-                <% if (!lista[i].confirmada) { %>
-                    <div class="p-2 text-danger h2"><b><%= lista[i].dni %></b></div>
                     <div class="btn-group">
-                        <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                        <a class="btn btn-outline-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
+                        <% if (lista.docs[i].contacto.respuesta){ %>
+                            <a class="btn btn-outline-danger btn-sm" href="/persona/respuesta/<%= lista.docs[i]._id %>">Desuscribir</a>
+                            <a class="btn btn-success btn-sm disabled" href="/persona/respuesta/<%= lista.docs[i]._id %>">Suscripta</a>
+                        <% } else { %>
+                            <a class="btn btn-danger btn-sm disabled" href="/persona/respuesta/<%= lista.docs[i]._id %>">Desuscripta</a>
+                            <a class="btn btn-outline-success btn-sm" href="/persona/respuesta/<%= lista.docs[i]._id %>">Suscribir</a>
+                        <% } %>
                     </div>
-                <% } else if (lista[i].estado.voto){ %>
-                    <div class="p-2 text-success h2"><b><%= lista[i].dni %></b></div>
-                    <div class="btn-group">
-                        <a class="btn btn-outline-danger btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                        <a class="btn btn-success btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                    </div>
-                <% } else { %>
-                    <div class="p-2 text-success h2"><b><%= lista[i].dni %></b></div>
-                    <div class="btn-group">
-                        <a class="btn btn-danger btn-sm disabled" href="/afiliadx/estado/voto/<%= lista[i]._id %>">No votó</a>
-                        <a class="btn btn-outline-success btn-sm" href="/afiliadx/estado/voto/<%= lista[i]._id %>">Votó</a>
-                    </div>
-                <% } %>
                 </div>
                 <div class="card-body d-grid gap-2" >
                     <div class="row align-items-center">
                         <h5 class="card-title" id="nombreApellido">
-                            <%= lista[i].nombre + ' ' + lista[i].apellido %><br>
-                            <small class="text-muted">(<%= lista[i].domicilio %>)</small>
+                            <%= lista.docs[i].nombre + ' ' + lista.docs[i].apellido %><br>
+                            <small class="text-muted">(<%= lista.docs[i].domicilio %>)</small>
                         </h5>
                     </div>
-                    <%= lista[i].contacto %>
+                    <% for( let v = 0; v < vinculos.length; v ++ ) { %>
+                        <div class="text-capitalize fw-lighter text-success <%= JSON.stringify(lista.docs[i].vinculos[vinculos[v]]) === '{}' ? 'visually-hidden' : '' %> "><%=vinculos[v]%> ✓</div>
+                    <% } %>
                     <div class="d-grid gap-2 d-md-block">
-                        <% if (lista[i].contacto !== '') { %>
-                            <div class="btn-group">
-                                <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                                <a href="http://wa.me/549<%= lista[i].contacto %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
-                            </div>
-                        <% } else { %>
-                            <a class="btn btn-outline-secondary btn-sm" href="/afiliadx/editar/<%= lista[i]._id %>">Editar</a>
-                        <% } %>
+                        <div class="btn-group">
+                            <a class="btn btn-outline-secondary btn-sm" href="/persona/editar/<%= lista.docs[i]._id %>">Editar</a>
+                            <a class="btn btn-outline-primary btn-sm" href="/persona/<%= lista.docs[i]._id %>">Ver ficha</a>
+                            <% if (lista.docs[i].contacto.numero > 0) { %>                                    
+                                <a href="http://wa.me/549<%=lista.docs[i].contacto.numero %>" class="btn btn-outline-success btn-sm">Enviar wp</a>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
         <% } %>  
     </div>
+    <% if (lista.totalPages > 1) { %>
+        <nav aria-label="page navegation">
+            <ul class="pagination justify-content-center">
+                <% if (lista.hasPrevPage) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="<%= `${lista.prevPage}`%>" aria-level="Página Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <% } %>
+                <li class="page-item">
+                    <a class= "page-link" href="<%= `${lista.page}`%>">
+                        <%= `Página ${lista.page} de ${lista.totalPages}` %>
+                    </a>
+                </li>
+                <% if (lista.hasNextPage) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="<%= `${lista.nextPage}`%>" aria-level="Página Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    <% } %>
 <% } %>
 <script>
     $("#buscador").on("keyup", function() {

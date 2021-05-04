@@ -1,6 +1,7 @@
 const express = require('express');
+const {vinculo} = require('../helpers/helpers');
 const router = express.Router();
-const Afiliadx = require('../models/Afiliadx');
+const Persona = require('../models/Persona');
 const isAuthenticated = require('../passport/local-auth');
 
 
@@ -13,15 +14,15 @@ router.get('/dni', isAuthenticated,(req,res) => {
 router.post('/dni', isAuthenticated, (req,res)=> {
     const dni = req.body.dni;
 
-    res.redirect(`/dni/${dni}`);
+    res.redirect(`/dni/${dni}/1`);
 })
 
-router.get('/dni/:_dni', isAuthenticated, async (req,res) => {
+router.get('/dni/:_dni/:_page', isAuthenticated, async (req,res) => {
+    var vinculos = await vinculo()
+    const {_dni, _page} = req.params;
+    var lista = await Persona.paginate({dni: _dni},{page: _page, limit: 20})
 
-    const _dni = req.params._dni;
-    var lista = await Afiliadx.find({dni: _dni})
-
-    res.render('dni',{lista, _dni});
+    res.render('dni',{lista, _dni, vinculos});
 });
 
 module.exports = router;

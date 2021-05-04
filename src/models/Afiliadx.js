@@ -21,7 +21,7 @@ const afiliadxSchema = new Schema({
         contactadx: Boolean,
         voto: Boolean
     },
-    visible: Boolean
+    vinculos: Object
 },{
     versionKey:false,
     timestamps: true

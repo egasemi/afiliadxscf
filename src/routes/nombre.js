@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const Afiliadx = require('../models/Afiliadx');
+const Persona = require('../models/Persona');
 const isAuthenticated = require('../passport/local-auth');
+const {vinculo} = require('../helpers/helpers');
 
 
 router.get('/nombre', isAuthenticated, (req,res) => {
@@ -19,17 +20,18 @@ router.get('/nombre', isAuthenticated, (req,res) => {
 router.post('/nombre', isAuthenticated, (req, res) => {
     const { nombre, apellido} = req.body;
     if (nombre === '') {
-        res.redirect(`nombre/${apellido}/*`)
+        res.redirect(`nombre/${apellido}/*/1`)
     } else { 
-        res.redirect(`nombre/${apellido}/${nombre}`)
+        res.redirect(`nombre/${apellido}/${nombre}/1`)
     }
 
 })
 
-router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
-    var { _nombre, _apellido } = req.params;
+router.get('/nombre/:_apellido/:_nombre/:_page', isAuthenticated, async (req, res) => {
+    var vinculos = await vinculo()
+    var { _nombre, _apellido, _page } = req.params;
 
-    var lista = await Afiliadx.find({
+    var lista = await Persona.paginate({
         nombre: {
             $regex: `${_nombre}`,
             $options: 'si'
@@ -38,22 +40,27 @@ router.get('/nombre/:_apellido/:_nombre', isAuthenticated, async (req, res) => {
             $regex: `${_apellido}`,
             $options: 'si'
         }
-    }).sort({apellido: 'asc',nombre:'asc'})
+    },
+    {
+        page : _page, limit: 20
+    })
 
     if (lista.length === 0) {
         var query = `(?=.*${_apellido})(?=.*${_nombre})`
 
-        var lista = await Afiliadx.find({
+        var lista = await Persona.paginate({
             apellido:{
                 $regex: query,
                 $options: 'si'
             }
-        }).sort({apellido: 'asc', nombre: 'asc'})
+        },{
+            page : _page, limit: 20
+        })
     }
-
 
     res.render('nombre',{
         lista,
+        vinculos,
         _nombre,
         _apellido
     })

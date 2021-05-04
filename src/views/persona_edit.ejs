@@ -1,0 +1,46 @@
+<%- include('partials/_header') %>
+<%- include('navbar') %> 
+
+<form action="/persona/editar/<%= persona._id %>" method="POST" class="d-grid gap-2">
+    <div class="d-flex justify-content-between">
+        <h3>Editar persona</h3>
+    </div>
+    <div class="form-floating">
+        <input type="number" name="dni" id="dni" class="form-control" autocomplete="off" placeholder="DNI" value=<%= persona.dni %>>
+        <label for="dni">DNI</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" placeholder="Nombre" value="<%= persona.nombre %>" >
+        <label for="nombre">Nombre</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" name="apellido" id="apellido" class="form-control" autocomplete="off" placeholder="Apellido" value="<%= persona.apellido %>">
+        <label for="apellido">Apellido</label>
+    </div>
+    <div class="form-floating">
+        <input type="date" name="nacimiento" id="nacimiento" class="form-control" autocomplete="off" placeholder="Nacimiento" value="<%= persona.nacimiento %>">
+        <label for="nacimiento">Fecha de Nacimiento</label>
+    </div>
+    <div class="row g-2">
+        <div class="form-floating col-md-9">
+            <input type="number" name="contacto[numero]" id="contacto" class="form-control" autocomplete="off" placeholder="Celular" value=<%= persona.contacto.numero %>>
+            <label for="dni">Celular</label>
+        </div>
+        <div class="btn-group col-md-3">
+            <input class="btn-check" value=false name="contacto[respuesta]" id="des" type="radio" autocomplete="off" <%= !persona.contacto.respuesta ? 'checked' : '' %> >
+            <label for="des" class="btn btn-outline-danger">Desuscribir</label>
+            <input class="btn-check" value=true name="contacto[respuesta]" id="sus" type="radio" autocomplete="off" <%= persona.contacto.respuesta ? 'checked' : '' %>>
+            <label for="sus" class="btn btn-outline-success">Suscribir</label>
+        </div>
+    </div>
+    <div class="form-floating">
+        <input type="text" name="domicilio" id="domicilio" class="form-control" autocomplete="off" placeholder="Domicilio" value="<%= persona.domicilio %>" >
+        <label for="domicilio">Domicilio</label>
+    </div>
+
+    <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="nombre" id="buscar">Guardar</button>
+    <a href="<%= back %>" class="btn btn-outline-secondary btn-lg">Cancelar</a>
+</form>
+
+<%- include('partials/_footer') %>

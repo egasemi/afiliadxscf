@@ -1,0 +1,36 @@
+<%- include('partials/_header') %>
+<%- include('navbar') %>
+
+<h3>Personas por lugar</h3>
+
+<div class="form-floating">
+    <select name="distrito" id="lugar" class="form-select" onchange="submitSelect();">
+        <option value="" disabled>Elegí un lugar</option>
+        <% for( let i = 0; i < lugares.length; i++ ) { %>
+            <% if (lugares[i] === "") { %>
+                <option value="">NINGUNO</option> 
+            <% } else {%>
+                <option value="<%= lugares[i] %>" <%= lugares[i] === _lugar ? 'selected': '' %> ><%= lugares[i] %></option>
+            <% } %>
+        
+        <% } %>
+    </select>
+    <label for="lugar">Lugar</label>
+</div>
+<%- include('partials/_table') %>
+<script>
+    function submitSelect() {
+        var selected = document.getElementById('lugar').value
+        document.location.replace(`/lugar/${selected}/1`)
+        
+    }
+    $("#buscador").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tabla tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+</script>
+
+<%- include('partials/_footer') %> 

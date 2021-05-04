@@ -1,13 +1,13 @@
 const passport = require('passport');
-const Afiliadx = require('../models/Afiliadx');
+const Persona = require('../models/Persona');
 
-passport.serializeUser((afiliadx, done) => {
-    done(null, afiliadx.id)
+passport.serializeUser((persona, done) => {
+    done(null, persona.id)
 });
 
 passport.deserializeUser(async (id, done) => {
-    const afiliadx = await Afiliadx.findById(id);
-    done(null, afiliadx)
+    const persona = await Persona.findById(id);
+    done(null, persona)
 });
 
 
@@ -18,10 +18,10 @@ passport.use('local-signin', new localStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, dni, password, done) => {
-    const afiliadx = await Afiliadx.findOne({dni:dni})
-    afiliadx.password = afiliadx.encryptPassword(password);
-    await afiliadx.save()
-    done(null, afiliadx)
+    const persona = await Persona.findOne({dni:dni})
+    persona.password = persona.encryptPassword(password);
+    await persona.save()
+    done(null, persona)
 }))
 
 passport.use('local-login', new localStrategy({
@@ -29,17 +29,17 @@ passport.use('local-login', new localStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, dni, password, done) => {
-    const afiliadx = await Afiliadx.findOne({dni:dni})
-    if(!afiliadx) {
+    const persona = await Persona.findOne({dni:dni})
+    if(!persona) {
         return done(null, false, req.flash('loginMessage', 'Usuarix no encontrado'))
     }
-    if(afiliadx.password === undefined) {
-        return done(null, false, req.flash('loginMessage', 'Afiliadx sin acceso'))
+    if(persona.password === undefined) {
+        return done(null, false, req.flash('loginMessage', 'Persona sin acceso'))
     }
-    if(!afiliadx.comparePassword(password)) {
+    if(!persona.comparePassword(password)) {
         return done(null, false, req.flash('loginMessage', 'Contraseña invalida'))
     }
-    done(null, afiliadx)
+    done(null, persona)
 }))
 
 function isAuthenticated(req, res, next) {
