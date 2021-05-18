@@ -43,15 +43,12 @@ passport.use('local-login', new localStrategy({
 }))
 
 function isAuthenticated(req, res, next) {
-    var pass = process.env.PASS || false
-    if (pass) {
-        if (req.isAuthenticated()) {
-            return next()
-        }
-        res.redirect('/login')
-    } else {
+
+    if (req.isAuthenticated()) {
         return next()
     }
+    //res.redirect('/login')
+    return next()
 }
 
 function isAdmin(req, res, next) {
