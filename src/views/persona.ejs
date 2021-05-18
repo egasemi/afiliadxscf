@@ -63,8 +63,36 @@
         <a class="btn btn-outline-primary btn-lg" href="/persona/editar/<%= persona._id %>">Editar datos</a>
     </div>
     <div class="col d-grid gap-2 mb-3">
-        <a class="btn btn-outline-danger btn-lg" href="/persona/borrar/<%= persona._id %>">Eliminar Persona</a>
+        <button class="btn btn-outline-danger btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">Eliminar Persona</button>
     </div> 
+</div>
+
+<div class="modal fade" 
+    id="deleteModal" 
+    tabindex="-1" 
+    aria-labelledby="deleteModalLabel" 
+    aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Eliminar persona</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p>Posta vas a borrar a <%= persona.datosGenerales.nombre  %>? También podés archivarlo para que no se vea más en la base de datos y en el caso de que te arrepientas se puede recuperar</p>
+            </div>
+            <div class="modal-footer">
+                <div class="col d-grid gap-2 mb-3">
+                    <a class="btn btn-danger" data-bs-dismiss="modal" href="/persona/borrar/<%= persona._id %>">Eliminar para siempre</a>
+                    
+                    <a class="btn btn-warning" data-bs-dismiss="modal" href="/persona/archivar/<%= persona._id %>">Archivar</a>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%- include('partials/_footer') %>

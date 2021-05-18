@@ -29,7 +29,11 @@ const personaSchema = new Schema({
     nombre: String,
     apellido: String,
     email: String,
-    password: String
+    password: String,
+    oculto: {
+        type: Boolean,
+        default: false
+    }
 },{
     versionKey: false,
     timestamps: true

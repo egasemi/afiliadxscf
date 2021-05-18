@@ -49,20 +49,23 @@ router.get('/persona/:id', isAuthenticated, async (req, res) => {
 })
 
 router.get('/persona/respuesta/:id', isAuthenticated, async (req, res) => {
-    const {tipo, id} = req.params
-    var persona = await Persona.findById(id);
+    var persona = await Persona.findById(req.params.id);
     persona.contacto.respuesta = !persona.contacto.respuesta;
     persona.save()
     res.redirect(`${req.headers.referer}#${id}`)
 })
 
 router.get('/persona/borrar/:id', isAuthenticated, async (req, res) => {
-    var persona = await Persona.findById(req.params.id)
-    persona.visible = !persona.visible
-    //persona.save();
+    await Persona.deleteOne({_id:req.params.id})
     res.redirect('/')
 })
 
+/*router.get('/persona/archivar/:id', isAuthenticated, async (req, res) => {
+    var persona = await Persona.findById(req.params.id);
+    persona.visible = !persona.contacto.respuesta;
+    persona.save()
+    res.redirect(`${req.headers.referer}#${id}`)
+})*/
 router.get('/persona/editar/:id', isAuthenticated,async (req, res) => {
     await desplegable()
     back = req.headers.referer

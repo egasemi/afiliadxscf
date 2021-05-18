@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-floating">
-        <input type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" placeholder="Nombre" value="<%= persona.nombre %>" >
+        <input type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" placeholder="Nombre" value="<%= persona.nombre %>">
         <label for="nombre">Nombre</label>
     </div>
     <div class="form-floating">
@@ -28,7 +28,7 @@
             <label for="dni">Celular</label>
         </div>
         <div class="btn-group col-md-3">
-            <input class="btn-check" value=false name="contacto[respuesta]" id="des" type="radio" autocomplete="off" <%= !persona.contacto.respuesta ? 'checked' : '' %> >
+            <input class="btn-check" value=false name="contacto[respuesta]" id="des" type="radio" autocomplete="off" <%= !persona.contacto.respuesta ? 'checked' : '' %>>
             <label for="des" class="btn btn-outline-danger">Desuscribir</label>
             <input class="btn-check" value=true name="contacto[respuesta]" id="sus" type="radio" autocomplete="off" <%= persona.contacto.respuesta ? 'checked' : '' %>>
             <label for="sus" class="btn btn-outline-success">Suscribir</label>
@@ -37,6 +37,10 @@
     <div class="form-floating">
         <input type="text" name="domicilio" id="domicilio" class="form-control" autocomplete="off" placeholder="Domicilio" value="<%= persona.domicilio %>" >
         <label for="domicilio">Domicilio</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" name="email" id="email" class="form-control" autocomplete="off" placeholder="email" value="<%= persona.email %>" >
+        <label for="email">Email</label>
     </div>
 
     <button type="submit" class="btn btn-outline-success btn-lg" aria-describedby="nombre" id="buscar">Guardar</button>
