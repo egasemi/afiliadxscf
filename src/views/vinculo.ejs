@@ -4,7 +4,7 @@
 <h3>Personas por vinculo</h3>
 
 <div class="form-floating">
-    <select name="distrito" id="lugar" class="form-select" onchange="submitSelect();">
+    <select name="distrito" id="vinculo" class="form-select" onchange="submitSelect();">
         <option value="" disabled selected>Elegí un vinculo</option>
         <% for( let i = 0; i < vinculos.length; i++ ) { %>
             <% if (vinculos[i] === "") { %>
@@ -15,12 +15,12 @@
         
         <% } %>
     </select>
-    <label for="lugar">Lugar</label>
+    <label for="vinculo">Vínculo</label>
 </div>
 <%- include('partials/_table') %>
 <script>
     function submitSelect() {
-        var selected = document.getElementById('lugar').value
+        var selected = document.getElementById('vinculo').value
         document.location.replace(`/vinculo/${selected}/1`)
         
     }

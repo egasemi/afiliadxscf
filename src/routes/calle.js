@@ -24,6 +24,8 @@ router.post('/calle', isAuthenticated, (req,res)=> {
 
 router.get('/calle/:_calle/:_page', isAuthenticated, async (req, res) => {
     var vinculos = await vinculo()
+    vinculos.push('voto','votante')
+    vinculos.splice(0,1)
     const {_calle, _page } = req.params
     const lista = await Persona.paginate({
         domicilio: {

@@ -19,6 +19,8 @@ router.post('/dni', isAuthenticated, (req,res)=> {
 
 router.get('/dni/:_dni/:_page', isAuthenticated, async (req,res) => {
     var vinculos = await vinculo()
+    vinculos.push('voto','votante')
+    vinculos.splice(0,1)
     const {_dni, _page} = req.params;
     var lista = await Persona.paginate({dni: _dni},{page: _page, limit: 20})
 

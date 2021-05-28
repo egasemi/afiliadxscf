@@ -29,6 +29,8 @@ router.post('/nombre', isAuthenticated, (req, res) => {
 
 router.get('/nombre/:_apellido/:_nombre/:_page', isAuthenticated, async (req, res) => {
     var vinculos = await vinculo()
+    vinculos.push('voto','votante')
+    vinculos.splice(0,1)
     var { _nombre, _apellido, _page } = req.params;
 
     var lista = await Persona.paginate({

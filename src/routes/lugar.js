@@ -9,6 +9,8 @@ const {desplegable, vinculo} = require('../helpers/helpers');
 router.get('/lugar', isAuthenticated, async (req, res) => {
     var lugares = await desplegable();
     var vinculos = await vinculo();
+    vinculos.push('voto','votante')
+    vinculos.splice(0,1)
     var lista = false
     var count = 0
     var _lugar = ''
@@ -23,6 +25,8 @@ router.get('/lugar', isAuthenticated, async (req, res) => {
 
 router.get('/lugar/:_lugar/:_page', isAuthenticated, async (req, res) => {
     var vinculos = await vinculo();
+    vinculos.push('voto','votante')
+    vinculos.splice(0,1)
     var { _lugar, _page } = req.params;
     var lista = await Persona.paginate({'vinculos.difusion.lugar': _lugar},{page:_page, limit: 20})
     var count  = lista.length

@@ -2,10 +2,10 @@
     <% if (lista.docs.length < 1) { %>
         <h6 class='text-danger'>Sin resultados</h6>
     <% } else { %>
-        <div class="form-floating d-none d-sm-block">
+        <!--div class="form-floating d-none d-sm-block">
             <input type="text" name="buscador" id="buscador" class="form-control" autocomplete="off" placeholder="Buscador" required>
             <label for="buscador">Filtrar</label>
-        </div>
+        </div-->
         <% if (lista.totalDocs > 1) { %>
             <h3>Registros encontrados: <%= lista.totalDocs %> </h3>
         <% } %>
@@ -19,8 +19,11 @@
                         <th scope="col">Contacto</th>
                         <th scope="col">Acciones</th>
                         <th scope="col">Difusión WP</th>
+                        <th scope="col">Elecciones Internas</th>
                         <% vinculos.forEach(v => { %>
-                            <th scope="col" class="text-capitalize"><%= v %></th> 
+                            <% if (!(['voto', 'votante'].includes(v))) { %>
+                                <th scope="col" class="text-capitalize"><%= v %></th> 
+                            <% } %>
                         <% }) %>
                     </tr>
                 </thead>
@@ -52,8 +55,17 @@
                                 <% } %>
                             </div>
                         </td>
-                        <% for( let k = 0; k < vinculos.length; k++ ) { %>
-                            <td scope="col"><%= JSON.stringify(lista.docs[i].vinculos[vinculos[k]]) === '{}' ? 'x' : '✓' %></td>
+                        <td scopo="col">
+                            <% if (lista.docs[i].vinculos.afiliada.estado !== undefined) { %>
+                                <span class="badge bg-<%= lista.docs[i].vinculos.afiliada.estado.voto ? 'success' : 'danger' %> ">Voto</span>
+                                <span class="badge bg-<%= lista.docs[i].vinculos.afiliada.estado.votante ? 'success' : 'danger' %> ">Votante</span>
+                            <% } else { %>
+                                <span class="badge bg-danger">Voto</span>
+                                <span class="badge bg-danger">Votante</span>
+                            <% } %>
+                        </td>
+                        <% for( let k = 0; k < 3; k++ ) { %>
+                            <td scope="col"><%= ['{}', undefined].includes(JSON.stringify(lista.docs[i].vinculos[vinculos[k]])) ? 'x' : '✓' %></td>
                         <% } %>
                     </tr>
                 <%}%>
@@ -63,7 +75,7 @@
     <div class="card-group d-block d-sm-none mt-4" id="cards">
         <% for (var i = 0;i < lista.docs.length; i++) {%>
             <div class="card" id="<%= lista.docs[i].id %>">
-                <div class="card-header d-flex flex-row justify-content-between">
+                <div class="card-header d-flex flex-row">
 
                     <div class="btn-group">
                         <% if (lista.docs[i].contacto.respuesta){ %>
@@ -74,6 +86,13 @@
                             <a class="btn btn-outline-success btn-sm" href="/persona/respuesta/<%= lista.docs[i]._id %>">Suscribir</a>
                         <% } %>
                     </div>
+                    <% if (lista.docs[i].vinculos.afiliada.estado !== undefined) { %>
+                        <span class="badge bg-<%= lista.docs[i].vinculos.afiliada.estado.voto ? 'success' : 'danger' %> ">Voto</span>
+                        <span class="badge bg-<%= lista.docs[i].vinculos.afiliada.estado.votante ? 'success' : 'danger' %> ">Votante</span>
+                    <% } else { %>
+                        <span class="badge bg-danger">Voto</span>
+                        <span class="badge bg-danger">Votante</span>
+                    <% } %>
                 </div>
                 <div class="card-body d-grid gap-2" >
                     <div class="row align-items-center">
@@ -83,7 +102,7 @@
                         </h5>
                     </div>
                     <% for( let v = 0; v < vinculos.length; v ++ ) { %>
-                        <div class="text-capitalize fw-lighter text-success <%= JSON.stringify(lista.docs[i].vinculos[vinculos[v]]) === '{}' ? 'visually-hidden' : '' %> "><%=vinculos[v]%> ✓</div>
+                        <div class="text-capitalize fw-lighter text-success <%= ['{}', undefined].includes(JSON.stringify(lista.docs[i].vinculos[vinculos[v]])) ? 'visually-hidden' : '' %> "><%=vinculos[v]%> ✓</div>
                     <% } %>
                     <div class="d-grid gap-2 d-md-block">
                         <div class="btn-group">
